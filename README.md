@@ -12,7 +12,7 @@ Este repositorio contiene todos los scripts, datos y notebooks necesarios para d
 pilot/
 ├── analisis_completo.py              # Análisis general de las imágenes procesadas
 ├── analisis_ndvi_evil.py             # Cálculo y análisis de estadísticas de NDVI y EVI
-├── extract_polygons.py               # Extracción de polígonos a partir de datos geoespaciales
+├── extract_polygons.py               # Extracción de polígonos con datos geoespaciales
 ├── generate_indices.py               # Cálculo de índices NDVI y EVI
 ├── generate_mask_sobel.py            # Generación de máscaras usando el algoritmo Sobel
 ├── jupyter_notebook/
