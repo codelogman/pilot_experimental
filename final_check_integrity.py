@@ -1,3 +1,30 @@
+"""
+final_check_integrity.py
+
+Descripción:
+Este script realiza una verificación final de la integridad de los datasets de entrenamiento, asegurando que las imágenes 
+y las máscaras estén correctamente formateadas y listas para ser utilizadas en modelos de aprendizaje profundo. 
+Se validan las dimensiones, los valores y la normalización de los datos, y se corrigen inconsistencias si es necesario.
+
+Estructura del Dataset:
+- `X_data.npy`: Contiene las imágenes de entrada normalizadas, en escala de grises, con dimensiones 
+  (número_de_imágenes, altura, ancho, canales).
+- `Y_data.npy`: Contiene las máscaras correspondientes, binarias (valores 0 y 1), con dimensiones 
+  (número_de_máscaras, altura, ancho, canales).
+
+Validaciones realizadas:
+1. Verifica que las dimensiones de las imágenes y las máscaras sean consistentes.
+2. Asegura que las imágenes estén normalizadas entre 0 y 1.
+3. Comprueba que las máscaras sean binarias.
+4. Corrige las dimensiones y los valores cuando sea necesario.
+
+Dependencias:
+- Python >= 3.8
+- NumPy
+
+alex_strange
+"""
+
 import numpy as np
 
 # Cargar los datos
