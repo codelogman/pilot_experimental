@@ -1,0 +1,95 @@
+DOCUMENTO TÉCNICO
+
+Proceso de Detección y Delimitación de Bordes Agrícolas mediante Procesamiento Geoespacial y Aprendizaje Profundo
+
+Requerimientos y Cumplimiento
+
+Este documento describe el proceso técnico que seguimos para cumplir con los requerimientos especificados en el documento REF. 
+Incluimos un detalle completo de cada etapa del flujo, los scripts utilizados, las tecnologías implementadas y los entregables generados. 
+Aseguramos que en todo momento se preserve la información geoespacial de los polígonos definidos en el archivo KML original.
+
+Flujo de Procesamiento
+
+Descarga de datos satelitales
+
+En esta etapa utilizamos el script sentinel_download_script.py para descargar bandas clave de Sentinel-2 (B8, B4, B3, B2). Estas bandas 
+se descargaron para las nueve áreas poligonales definidas en el archivo KML proporcionado y abarcan tres períodos estacionales: initial, refresh y finalize.
+
+Para lograrlo, aprovechamos Google Earth Engine y Geemap, con un filtro de calidad que limitó las descargas a imágenes con menos del 30% de nubes. 
+Esto nos permitió garantizar que las bandas descargadas fueran útiles para el procesamiento posterior.
+
+Además, las imágenes descargadas se recortaron para ajustarse perfectamente a los polígonos, manteniendo atributos geoespaciales como CRS y bounds. 
+Este paso nos asegura la integridad geoespacial para las etapas posteriores.
+
+Entregables: Archivos TIFF por banda para cada polígono y período estacional, con atributos geoespaciales intactos.
+
+Generación de máscaras mediante Sobel
+
+Para resaltar los bordes agrícolas visibles en las imágenes descargadas, usamos el script generate_sobel_sentinel.py. 
+Este script aplica el operador Sobel ajustado para detectar bordes, seguido de técnicas de realce de líneas y contraste 
+para mejorar los resultados.
+
+Implementamos OpenCV y Rasterio para este procesamiento, asegurándonos de conservar la información geoespacial de las 
+bandas originales en cada máscara generada. Cada máscara destaca los bordes relevantes, lo que facilita la segmentación 
+en etapas posteriores.
+
+Entregables: Máscaras TIFF con bordes resaltados para cada banda, polígono y período estacional.
+
+Verificación de simetría
+
+Con el script verificar_simetria.py, validamos que las máscaras generadas y las bandas originales tengan la misma resolución, 
+alineación espacial y CRS. Esta validación es crítica para mantener la consistencia en todo el flujo.
+
+Comparamos automáticamente las dimensiones, bounds y CRS entre las imágenes y las máscaras, generando alertas detalladas si 
+se detectan inconsistencias. Este paso asegura que los datos estén perfectamente alineados antes de proceder a la segmentación.
+
+Entregables: Reporte de consistencia para cada conjunto de datos. En caso de detectar inconsistencias, se detalla el problema.
+
+Segmentación con SAM
+
+La segmentación de las máscaras generadas se realizó con el script sam_2_apply_colored.py, utilizando el modelo SAM (Segment Anything Model). 
+Este paso nos permitió identificar y delimitar áreas agrícolas en las máscaras.
+
+Además, generamos archivos en formato GPKG y GeoJSON, incluyendo atributos como área en acres y conteo de polígonos. Los archivos GPKG se 
+integraron con herramientas GIS como ArcGIS, asegurando compatibilidad con plataformas empresariales.
+
+También producimos máscaras RGBA para inspección visual. Estas máscaras permiten validar manualmente los resultados, asegurando que la 
+segmentación sea consistente con los bordes detectados.
+
+Entregables: Archivos GPKG con atributos enriquecidos, archivos GeoJSON para integración GIS, y máscaras RGBA para inspección visual.
+
+
+Métricas Generadas
+
++-------------------+-----------------------------------+ 
+| MÉTRICA | DETALLE | 
++-------------------+-----------------------------------+ 
+| Área en acres | Calculada para cada polígono. | 
+| Conteo de polígonos| Incluido en los GPKG y GeoJSON. | 
+| Porcentaje de nubes| Registrado desde Sentinel-2. | 
+| Precisión | Consistente en 68% de bordes. | 
+| Margen de error | Menor al 5% o 20 acres. | 
++-------------------+-----------------------------------+
+
+Preparación para Fine-Tuning
+
+Diseñamos un flujo preliminar para realizar el Fine-Tuning del modelo SAM. Esto incluye la creación de estructuras de directorios y 
+ejemplos de datos en formato COCO para anotaciones manuales. Aunque esta etapa no se implementó completamente, dejamos listo el entorno 
+para entrenar el modelo en futuras iteraciones.
+
+Entregables: Estructura de directorios y ejemplos de JSON listos para anotaciones manuales.
+
+Prototipo de API
+
+Finalmente, desarrollamos un prototipo funcional utilizando FastAPI, que permite acceder a los resultados procesados mediante una interfaz 
+programática. Esta API es compatible con herramientas empresariales como ArcGIS y Microsoft Azure.
+
+Entregables: Prototipo de API funcional con endpoints documentados para acceso a los datos procesados.
+
+Notas Finales
+
+Este flujo de trabajo cumple con los requerimientos del documento REF. Se validó cada etapa para garantizar que la información geoespacial 
+se preserve y que los resultados sean consistentes con las especificaciones. Además, dejamos componentes preparados para futuras iteraciones, 
+como el Fine-Tuning del modelo y la integración completa con GIS y sistemas empresariales.
+
+
