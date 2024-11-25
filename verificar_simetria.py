@@ -1,4 +1,33 @@
-# verificar_simetria.py
+"""
+verificar_simetria.py
+
+Descripción:
+Este script verifica la simetría en un conjunto de datos de imágenes o matrices. 
+La simetría puede evaluarse en diversos contextos, como imágenes médicas, análisis geométrico, o datos científicos, 
+donde la estructura simétrica puede ser un indicador clave.
+
+Estructura de Entrada:
+- Archivos en formato NumPy (`.npy`) o imágenes (`.tif`, `.png`, etc.) que representan las matrices o imágenes a analizar.
+- Parámetros opcionales para definir el tipo de simetría a evaluar (eje horizontal, eje vertical, o simetría rotacional).
+
+Estructura de Salida:
+- Indicador binario (True/False) para cada entrada que identifica si es simétrica.
+- Estadísticas o métricas adicionales (por ejemplo, nivel de desvío de la simetría) opcionalmente almacenadas en un archivo de texto o JSON.
+
+Componentes principales:
+1. Carga y preprocesamiento de datos de entrada.
+2. Cálculo de simetría para cada entrada.
+3. Generación de reportes o gráficos para visualizar la simetría.
+
+Dependencias:
+- Python >= 3.8
+- NumPy
+- Rasterio (si se trabaja con datos geoespaciales)
+- Matplotlib (opcional para visualización)
+
+alex_strange
+"""
+
 import os
 import rasterio
 import json
