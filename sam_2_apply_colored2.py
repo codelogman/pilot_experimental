@@ -1,9 +1,46 @@
+"""
+sam_2_apply_colored2.py
+
+Descripción:
+Este script procesa máscaras generadas por Segment Anything Model (SAM) para incluir varias visualizaciones y formatos de salida:
+1. Máscaras segmentadas con bordes delineados en amarillo.
+2. Máscaras RGBA coloreadas con transparencia.
+3. Archivos georreferenciados ajustados para análisis espacial.
+4. Archivos GeoJSON para visualización y análisis interoperable.
+
+Estructura de Entrada:
+- Imágenes generadas previamente en formato TIFF con segmentaciones.
+- Las imágenes deben contener información de georreferenciación.
+
+Estructura de Salida:
+- Máscaras con bordes delineados (archivos TIFF).
+- Máscaras RGBA con transparencia (archivos TIFF).
+- Archivos GPKG con atributos adicionales como área en acres y recuento de polígonos.
+- Archivos GeoJSON derivados de los GPKG para visualización y análisis GIS.
+
+Componentes principales:
+1. Generación de bordes en amarillo para visualización.
+2. Creación de máscaras RGBA con colores únicos y transparencia.
+3. Ajuste y preservación de metadatos georreferenciados.
+4. Generación de archivos GIS (GPKG, GeoJSON) para análisis espacial detallado.
+
+Dependencias:
+- Python >= 3.8
+- NumPy
+- OpenCV
+- Rasterio
+- Geopandas
+
+alex_strange
+"""
+
+
 from samgeo import SamGeo
 import os
 import rasterio
 import numpy as np
-import cv2
 import geopandas as gpd
+import cv2
 
 # Configuración de SAM
 sam = SamGeo(
@@ -16,7 +53,7 @@ sam = SamGeo(
 sam_params = {
     "batch": True,
     "foreground": True,
-    "erosion_kernel": (4, 4),
+    "erosion_kernel": (5, 5),
     "mask_multiplier": 255,
     "multi_crop": False,
     "background": False
@@ -33,36 +70,34 @@ os.makedirs(output_base_dir, exist_ok=True)
 seasons = ["initial", "refresh", "finalize"]
 sobel_band = "B8"
 
-# Lista de máscaras a regenerar (si está vacía, se procesan todas las máscaras)
-lista_regeneracion = []  # Ejemplo: ["Polygon_1_B8_mask.tif", "Polygon_3_B8_mask.tif"]
+# Lista de máscaras a regenerar
+lista_regeneracion = ["Polygon_1_B8_mask.tif"]
+#lista_regeneracion = []
 
-# Función para verificar dimensiones y ajustar
+# Función para preparar máscaras para SAM
 def prepare_mask_for_sam(input_path):
     with rasterio.open(input_path) as src:
-        mask = src.read(1)
-        mask = np.expand_dims(mask, axis=-1)
-        mask = np.repeat(mask, 3, axis=-1)
-        return mask
+        mask = src.read(1)  # Leer solo la primera banda (2D array)
+        meta = src.meta
 
-# Función para agregar atributos al archivo GPKG
-def add_attributes_to_gpkg(gpkg_path):
+        # Asegurar que la máscara sea 3D para SAM
+        mask = np.expand_dims(mask, axis=-1)  # Expandir dimensiones: (H, W) -> (H, W, 1)
+        mask = np.repeat(mask, 3, axis=-1)  # Repetir en canales RGB: (H, W, 1) -> (H, W, 3)
+
+    return mask, meta
+
+# Función para escribir salida inicial con metadatos correctos
+def ensure_metadata(output_path, original_meta):
     """
-    Calcula atributos adicionales (área en acres, métricas) y los agrega al archivo GPKG.
+    Asegura que los metadatos CRS y Transform se mantengan en el archivo de salida.
     """
-    gdf = gpd.read_file(gpkg_path)
+    with rasterio.open(output_path, "r+") as dst:
+        print(f"    Ajustando metadatos georreferenciados para {output_path}")
+        dst.crs = original_meta["crs"]
+        dst.transform = original_meta["transform"]
 
-    # Calcular área en acres
-    gdf["Area_acres"] = gdf.geometry.area * 0.000247105  # Conversión a acres
-
-    # Agregar métricas adicionales (ejemplo: número total de polígonos)
-    gdf["Polygon_Count"] = len(gdf)  # Número total de polígonos
-
-    # Guardar archivo con los atributos agregados
-    gdf.to_file(gpkg_path, driver="GPKG")
-    print(f"Atributos agregados al archivo: {gpkg_path}")
-
-# Función para generar bordes amarillos y guardarlos como TIFF
-def add_yellow_borders(mask_path, output_borders_path):
+# Función para generar bordes amarillos con transparencia y guardarlos como TIFF
+def add_yellow_borders_with_transparency(mask_path, output_borders_path):
     with rasterio.open(mask_path) as src:
         mask = src.read(1)
         meta = src.meta
@@ -70,17 +105,21 @@ def add_yellow_borders(mask_path, output_borders_path):
     # Detectar bordes
     edges = cv2.Canny(mask, 50, 150)
 
-    # Crear una máscara amarilla (canales R, G, B)
-    borders_yellow = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.uint8)
-    borders_yellow[edges > 0] = [255, 255, 0]  # Amarillo para bordes
+    # Crear una matriz RGBA para incluir transparencia
+    borders_yellow = np.zeros((mask.shape[0], mask.shape[1], 4), dtype=np.uint8)
+    borders_yellow[edges > 0] = [255, 255, 0, 255]  # Amarillo sólido con opacidad completa
+    borders_yellow[edges == 0, 3] = 0  # Fondo transparente
 
-    # Guardar como TIFF con georreferenciación
-    meta.update({"count": 3, "dtype": "uint8"})
+    # Actualizar metadatos para 4 canales (RGBA)
+    meta.update({"count": 4, "dtype": "uint8"})
+
+    # Guardar la máscara con bordes amarillos y transparencia
     with rasterio.open(output_borders_path, "w", **meta) as dst:
-        for i in range(3):
+        for i in range(4):
             dst.write(borders_yellow[:, :, i], i + 1)
 
-    print(f"    Bordes amarillos guardados en: {output_borders_path}")
+    print(f"    Bordes amarillos con transparencia guardados en: {output_borders_path}")
+
 
 # Función para generar un archivo RGBA coloreado
 def add_transparency_and_color(input_mask_path, output_rgba_path):
@@ -88,26 +127,45 @@ def add_transparency_and_color(input_mask_path, output_rgba_path):
         mask = src.read(1)
         meta = src.meta
 
-    # Crear canal alfa: fondo transparente (0), áreas segmentadas opacas (255)
     alpha = np.where(mask > 0, 255, 0).astype(np.uint8)
-
-    # Generar colores únicos para cada área segmentada
     unique_values = np.unique(mask)
     color_map = {val: np.random.randint(0, 255, size=3) for val in unique_values if val > 0}
     color_mask = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.uint8)
     for val, color in color_map.items():
         color_mask[mask == val] = color
 
-    # Combinar color y transparencia
     rgba_mask = np.dstack((color_mask, alpha))
 
-    # Guardar como TIFF con georreferenciación
     meta.update({"count": 4, "dtype": "uint8"})
     with rasterio.open(output_rgba_path, "w", **meta) as dst:
         for i in range(4):
             dst.write(rgba_mask[:, :, i], i + 1)
 
     print(f"    Máscara RGBA coloreada guardada en: {output_rgba_path}")
+
+# Función para agregar atributos al archivo GPKG
+def add_attributes_to_gpkg(gpkg_path):
+    gdf = gpd.read_file(gpkg_path)
+    if gdf.crs is None:
+        print(f"Advertencia: CRS no definido en {gpkg_path}. Asignando 'EPSG:4326'.")
+        gdf.set_crs("EPSG:4326", inplace=True)
+
+    gdf_projected = gdf.to_crs(epsg=3857)
+    gdf["Area_acres"] = gdf_projected.geometry.area * 0.000247105
+    gdf["Polygon_Count"] = len(gdf)
+
+    gdf.to_file(gpkg_path, driver="GPKG")
+    print(f"Atributos agregados al archivo: {gpkg_path}")
+
+# Función para generar GeoJSON
+def generate_geojson(gpkg_path, geojson_path):
+    gdf = gpd.read_file(gpkg_path)
+    if gdf.crs is None:
+        print(f"Advertencia: CRS no definido en {gpkg_path}. Asignando 'EPSG:4326'.")
+        gdf.set_crs("EPSG:4326", inplace=True)
+
+    gdf.to_file(geojson_path, driver="GeoJSON")
+    print(f"GeoJSON generado: {geojson_path}")
 
 # Procesar estaciones
 for season in seasons:
@@ -121,22 +179,24 @@ for season in seasons:
         if f.endswith(".tif") and sobel_band in f
     ]
 
-    # Filtrar las máscaras si lista_regeneracion no está vacía
     if lista_regeneracion:
         files = [f for f in files if f in lista_regeneracion]
 
     for file_name in files:
         input_path = os.path.join(masks_dir, file_name)
         output_path = os.path.join(output_dir, file_name.replace(".tif", "_delineation.tif"))
+        gpkg_path = output_path.replace(".tif", ".gpkg")
+        geojson_path = output_path.replace(".tif", ".geojson")
         rgba_output_path = output_path.replace("_delineation.tif", "_rgba.tif")
         yellow_borders_path = output_path.replace("_delineation.tif", "_borders_yellow.tif")
 
         print(f"  Procesando archivo: {file_name}")
 
         try:
-            prepared_mask = prepare_mask_for_sam(input_path)
+            # Preparar máscara y obtener metadatos originales
+            prepared_mask, meta = prepare_mask_for_sam(input_path)
 
-            # Generar segmentación usando SAM
+            # Procesar con SAM
             sam.generate(
                 prepared_mask,
                 output_path,
@@ -148,21 +208,23 @@ for season in seasons:
                 background=sam_params["background"]
             )
 
-            # Convertir a GPKG
-            vector_path = output_path.replace(".tif", ".gpkg")
-            sam.tiff_to_gpkg(output_path, vector_path)
+            # Asegurar que las salidas tengan metadatos georreferenciados
+            ensure_metadata(output_path, meta)
 
-            # Agregar atributos al archivo GPKG
-            add_attributes_to_gpkg(vector_path)
+            # Generar bordes amarillos
+            add_yellow_borders_with_transparency(output_path, yellow_borders_path)
 
-            # Generar bordes amarillos como TIFF
-            add_yellow_borders(output_path, yellow_borders_path)
-
-            # Generar máscara RGBA coloreada como TIFF
+            # Generar máscara RGBA coloreada
             add_transparency_and_color(output_path, rgba_output_path)
+
+            # Convertir a GPKG y agregar atributos
+            sam.tiff_to_gpkg(output_path, gpkg_path)
+            add_attributes_to_gpkg(gpkg_path)
+
+            # Generar GeoJSON
+            generate_geojson(gpkg_path, geojson_path)
 
         except Exception as e:
             print(f"    Error procesando {file_name}: {e}")
 
 print("Segmentación completada.")
-
