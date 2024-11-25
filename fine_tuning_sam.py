@@ -1,3 +1,32 @@
+"""
+fine_tuning_sam.py
+
+Descripción:
+Este script está diseñado para realizar el ajuste fino (fine-tuning) del modelo Segment Anything (SAM) utilizando un dataset personalizado.
+El entrenamiento aprovecha el modelo preentrenado de SAM y ajusta sus pesos para optimizar su rendimiento en tareas de segmentación específicas.
+
+Estructura del Dataset:
+- Las imágenes y anotaciones se estructuran en un formato compatible con el protocolo COCO.
+- Cada entrada del dataset incluye:
+  - `image`: Información de la imagen, como dimensiones y nombre del archivo.
+  - `annotations`: Lista de máscaras asociadas con sus propiedades (segmentation, bbox, área, etc.).
+
+Componentes principales:
+1. Carga del modelo preentrenado de SAM.
+2. Configuración del optimizador y la política de aprendizaje.
+3. Loop de entrenamiento para ajustar los pesos del modelo.
+4. Evaluación del modelo en un conjunto de validación.
+
+Dependencias:
+- Python >= 3.8
+- PyTorch
+- Segment Anything (SAM) Framework
+- pycocotools (para manejo del formato COCO)
+
+alex_strange
+"""
+
+
 import torch
 import torchvision
 from torch.utils.data import DataLoader
