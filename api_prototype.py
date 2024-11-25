@@ -22,7 +22,6 @@ Dependencias:
 - Pycocotools (para trabajar con COCO RLE)
 
 alex_strange
-
 """
 
 
