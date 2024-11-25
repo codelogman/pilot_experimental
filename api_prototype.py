@@ -1,3 +1,31 @@
+"""
+api_prototype.py
+
+Descripción:
+Este script implementa un prototipo de API para la interacción con modelos de segmentación, específicamente SAM (Segment Anything Model). 
+Proporciona funcionalidades para recibir imágenes, procesarlas utilizando SAM y devolver resultados como máscaras segmentadas, 
+anotaciones o cualquier otra información relevante.
+
+Estructura del Dataset (opcional, si aplica):
+- La entrada incluye imágenes en formatos estándar (e.g., JPEG, PNG) junto con metadatos opcionales.
+- Las salidas siguen el formato COCO RLE para máscaras, junto con información de calidad y estabilidad de las segmentaciones.
+
+Funcionalidades principales:
+1. Recepción de imágenes y parámetros mediante solicitudes HTTP.
+2. Procesamiento de imágenes mediante SAM o modelos relacionados.
+3. Respuesta con máscaras segmentadas y metadatos en formato JSON o binario.
+
+Dependencias:
+- Python >= 3.8
+- Flask/FastAPI (o framework de API)
+- SAM (Segment Anything Model)
+- Pycocotools (para trabajar con COCO RLE)
+
+alex_strange
+
+"""
+
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 import os
