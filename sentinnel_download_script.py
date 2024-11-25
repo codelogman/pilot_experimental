@@ -1,3 +1,36 @@
+"""
+sentinnel_download_script.py
+
+Descripción:
+Este script automatiza la descarga de imágenes satelitales de Sentinel-2 desde una fuente específica (por ejemplo, API de Copernicus). 
+Las imágenes descargadas pueden ser usadas para análisis de teledetección, monitoreo ambiental, o procesamiento adicional como segmentación.
+
+Estructura de Entrada:
+- Parámetros del área de interés (AOI) en formato GeoJSON, KML o coordenadas.
+- Fechas de inicio y fin para la consulta de imágenes.
+- Parámetros opcionales como nivel de nube permitido, bandas específicas, y resolución deseada.
+
+Estructura de Salida:
+- Archivos descargados en formato SAFE o TIFF, organizados por fecha y AOI.
+- Metadatos relacionados con cada imagen, almacenados en un archivo separado.
+
+Componentes principales:
+1. Interacción con la API de descarga de Sentinel.
+2. Validación y filtrado de imágenes según criterios definidos por el usuario.
+3. Organización y almacenamiento de las imágenes descargadas.
+4. Registro de errores y resumen de la descarga.
+
+Dependencias:
+- Python >= 3.8
+- Requests
+- Shapely
+- Geopandas
+- SentinelHub-py (u otra librería específica para la API)
+
+alex_strange
+"""
+
+
 import ee
 import os
 import geemap
