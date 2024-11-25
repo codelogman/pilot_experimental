@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este repositorio contiene todos los scripts, datos y notebooks necesarios para detectar y analizar automáticamente bordes agrícolas mediante imágenes satelitales (Landsat y Sentinel). Se emplean índices de vegetación como NDVI y EVI, junto con algoritmos de detección de bordes.
+Este repositorio contiene todos los scripts, datos y notebooks necesarios para detectar y analizar automáticamente bordes agrícolas mediante imágenes satelitales (Sentinel). Se emplean índices de vegetación como NDVI y EVI, junto con algoritmos de detección de bordes.
 
 ---
 
