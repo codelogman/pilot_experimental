@@ -1,0 +1,49 @@
+{
+    "images": [
+        {
+            "id": 1,
+            "width": 1024,
+            "height": 768,
+            "file_name": "example_val_image.jpg"
+        }
+    ],
+    "annotations": [
+        {
+            "id": 1,
+            "image_id": 1,
+            "segmentation": [
+                [
+                    200,
+                    300,
+                    250,
+                    300,
+                    250,
+                    350,
+                    200,
+                    350
+                ]
+            ],
+            "bbox": [
+                200,
+                300,
+                50,
+                50
+            ],
+            "area": 2500,
+            "predicted_iou": 0.92,
+            "stability_score": 0.88,
+            "crop_box": [
+                150,
+                250,
+                300,
+                400
+            ],
+            "point_coords": [
+                [
+                    225,
+                    325
+                ]
+            ]
+        }
+    ]
+}

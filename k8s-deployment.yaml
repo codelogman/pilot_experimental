@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: ref17
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ref17
+  template:
+    metadata:
+      labels:
+        app: ref17
+    spec:
+      containers:
+      - name: ref17-container
+        image: ggKodelogman/ref17-project:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ref17-service
+spec:
+  selector:
+    app: ref17
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: LoadBalancer
