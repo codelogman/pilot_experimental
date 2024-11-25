@@ -1,3 +1,33 @@
+"""
+generate_sobel_sentinel.py
+
+Descripción:
+Este script aplica el filtro Sobel para extraer los bordes de imágenes de satélite Sentinel-2.
+El resultado son máscaras en escala de grises que destacan los bordes relevantes en las imágenes de entrada.
+Estas máscaras pueden utilizarse para tareas de segmentación, análisis espacial o como entrada para modelos como Segment Anything (SAM).
+
+Estructura de Entrada:
+- Directorio con imágenes en formato TIFF provenientes de Sentinel-2.
+- Cada imagen debe tener información georreferenciada para conservar las propiedades espaciales.
+
+Estructura de Salida:
+- Máscaras generadas en escala de grises almacenadas como archivos TIFF con la misma georreferenciación que las imágenes de entrada.
+
+Componentes principales:
+1. Carga de imágenes Sentinel-2 desde un directorio especificado.
+2. Aplicación del filtro Sobel para detección de bordes.
+3. Generación y guardado de máscaras en un formato compatible con análisis posterior.
+
+Dependencias:
+- Python >= 3.8
+- NumPy
+- OpenCV (para aplicar el filtro Sobel)
+- Rasterio (para manejo de imágenes georreferenciadas)
+
+alex_strange
+"""
+
+
 import os
 import cv2
 import numpy as np
