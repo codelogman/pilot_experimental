@@ -1,6 +1,6 @@
 # Pilot Experimental: Agricultural Edge Detection 🌍
 
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/your-repo)
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/codelogman/experimental_pilot)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-Deploy%20Ready-blue?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
