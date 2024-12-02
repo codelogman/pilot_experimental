@@ -1,4 +1,4 @@
-DOCUMENTO TÉCNICO
+**DOCUMENTO TÉCNICO**
 
 Proceso de Detección y Delimitación de Bordes Agrícolas mediante Procesamiento Geoespacial y Aprendizaje Profundo
 
