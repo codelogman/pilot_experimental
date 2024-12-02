@@ -14,13 +14,15 @@ Este repositorio contiene los scripts, análisis y configuraciones para desarrol
 
 ```plaintext
 pilot_experimental/
-├── analysis_statistics.html       # Análisis estadístico y métricas de los datos procesados.
-├── api_prototype.py               # Prototipo de API para detección de bordes agrícolas.
+├── notebook/                      # Carpeta contenedora de los notebooks
+│   └── dataset_construction.ipynb # Flujo de construccion del dataset.
 ├── dataset/                       # Datasets personalizados para el fine-tuning.
 │   ├── train_annotations.json     # Anotaciones de entrenamiento (COCO).
 │   ├── train_images/              # Imágenes de entrenamiento.
 │   ├── val_annotations.json       # Anotaciones de validación (COCO).
 │   └── val_images/                # Imágenes de validación.
+├── analysis_statistics.html       # Análisis estadístico y métricas de los datos procesados.
+├── api_prototype.py               # Prototipo de API para detección de bordes agrícolas.
 ├── diagrama.png                   # Diagrama del flujo de trabajo completo.
 ├── Dockerfile                     # Dockerfile para contenerizar el flujo.
 ├── final_check_integrity.py       # Verificación de integridad de archivos generados.
