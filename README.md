@@ -1,36 +1,37 @@
-# Agricultural Field Border Detection
+# Pilot Experimental: Agricultural Edge Detection 🚜🌍
 
-## Descripción
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/your-repo)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/kubernetes-deploy-ready-blue)](https://kubernetes.io/)
+[![Jenkins](https://img.shields.io/badge/jenkins-automated-orange)](https://www.jenkins.io/)
 
-Este repositorio contiene todos los scripts, datos y notebooks necesarios para detectar y analizar automáticamente bordes agrícolas mediante imágenes satelitales (Sentinel). Se emplean índices de vegetación como NDVI y EVI, junto con algoritmos de detección de bordes.
+Este repositorio contiene los scripts, análisis y configuraciones para desarrollar un flujo completo de **detección de bordes agrícolas** utilizando imágenes satelitales Sentinel-2, **modelos de segmentación automática (SAM)** y herramientas de análisis geoespacial avanzadas.
 
----
-
-## Estructura del Proyecto
+## 🗂 Estructura del Proyecto
 
 ```plaintext
-
 pilot_experimental/
 ├── analysis_statistics.html       # Análisis estadístico y métricas de los datos procesados.
-├── api_prototype.py               # Implementación prototipo de una API para integrar servicios de detección de bordes agrícolas.
-├── dataset/                       # Directorio que contiene datasets para el fine-tuning de SAM.
-│   ├── train_annotations.json     # Anotaciones del dataset de entrenamiento en formato COCO.
-│   ├── train_images/              # Carpeta con imágenes del dataset de entrenamiento.
-│   ├── val_annotations.json       # Anotaciones del dataset de validación en formato COCO.
-│   └── val_images/                # Carpeta con imágenes del dataset de validación.
-├── diagrama.png                   # Diagrama que ilustra el flujo de trabajo completo, incluyendo la API y la integración del fine-tuning.
-├── Dockerfile                     # Dockerfile para contenerizar el flujo de trabajo y sus dependencias.
-├── final_check_integrity.py       # Script para garantizar la integridad final de los archivos generados y sus salidas.
-├── fine_tuning_sam.py             # Script para realizar el fine-tuning del modelo SAM utilizando datasets personalizados.
-├── generate_sobel_sentinel.py     # Script para procesar imágenes de Sentinel utilizando detección de bordes con Sobel.
-├── Jenkinsfile                    # Archivo Jenkinsfile para automatizar el despliegue y las pruebas del pipeline.
-├── k8s-deployment.yaml            # Configuración de despliegue para Kubernetes, asegurando escalabilidad.
-├── ndvi_evi_analysis.html         # Análisis detallado de NDVI y EVI generado a partir de imágenes de Sentinel.
-├── ndvi_evi_visualization_map.html # Mapa interactivo para visualizar valores de NDVI y EVI en los polígonos definidos.
-├── puppet-manifest.pp             # Archivo de configuración Puppet para la gestión de infraestructura.
-├── sam_2_apply_colored2.py        # Script para aplicar la segmentación de SAM, generar máscaras RGBA y exportar a GPKG/GeoJSON.
-├── sentinnel_download_script.py   # Script para descargar imágenes satelitales Sentinel-2 basándose en áreas poligonales definidas en un archivo KML.
-├── tech_specs.txt                 # Documentación técnica que detalla el flujo de trabajo, metodologías y cumplimiento con los requisitos del RFP.
-├── test site.kml                  # Archivo KML de entrada que define las áreas poligonales de interés para la detección de bordes agrícolas.
-├── unet_model.h5                  # Archivo de modelo UNet reservado para futuras integraciones.
-└── verificar_simetria.py          # Script para verificar la alineación espacial y consistencia entre las imágenes originales y las máscaras generadas.
+├── api_prototype.py               # Prototipo de API para detección de bordes agrícolas.
+├── dataset/                       # Datasets personalizados para el fine-tuning.
+│   ├── train_annotations.json     # Anotaciones de entrenamiento (COCO).
+│   ├── train_images/              # Imágenes de entrenamiento.
+│   ├── val_annotations.json       # Anotaciones de validación (COCO).
+│   └── val_images/                # Imágenes de validación.
+├── diagrama.png                   # Diagrama del flujo de trabajo completo.
+├── Dockerfile                     # Dockerfile para contenerizar el flujo.
+├── final_check_integrity.py       # Verificación de integridad de archivos generados.
+├── fine_tuning_sam.py             # Fine-tuning del modelo SAM.
+├── generate_sobel_sentinel.py     # Procesamiento Sobel de imágenes Sentinel.
+├── Jenkinsfile                    # Pipeline automatizado con Jenkins.
+├── k8s-deployment.yaml            # Configuración de despliegue en Kubernetes.
+├── ndvi_evi_analysis.html         # Análisis NDVI/EVI.
+├── ndvi_evi_visualization_map.html # Mapa interactivo de NDVI/EVI.
+├── puppet-manifest.pp             # Gestión de infraestructura con Puppet.
+├── sam_2_apply_colored2.py        # Segmentación SAM con exportación a GeoJSON/GPKG.
+├── sentinnel_download_script.py   # Descarga de imágenes Sentinel-2.
+├── tech_specs.txt                 # Especificaciones técnicas del proyecto.
+├── test site.kml                  # Áreas de interés definidas en formato KML.
+├── unet_model.h5                  # Modelo UNet para futuras integraciones.
+└── verificar_simetria.py          # Verificación de consistencia espacial.
