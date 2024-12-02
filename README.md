@@ -40,7 +40,7 @@ pilot_experimental/
 
 
 
-🚀 ## Funcionalidades
+## Funcionalidades
 
 **Preprocesamiento** de Imágenes **Satelitales**:
 
