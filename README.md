@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/your-repo)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
-[![Kubernetes](https://img.shields.io/badge/kubernetes-deploy-ready-blue)](https://kubernetes.io/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-Deploy%20Ready-blue?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![Jenkins](https://img.shields.io/badge/jenkins-automated-orange)](https://www.jenkins.io/)
 
 Este repositorio contiene los scripts, análisis y configuraciones para desarrollar un flujo completo de **detección de bordes agrícolas** utilizando imágenes satelitales Sentinel-2, **modelos de segmentación automática (SAM)** y herramientas de análisis geoespacial avanzadas.
