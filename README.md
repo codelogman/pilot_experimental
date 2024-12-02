@@ -37,7 +37,7 @@ pilot_experimental/
 └── verificar_simetria.py          # Verificación de consistencia espacial.
 ```
 
-
+<img src="diagrama.png" alt="Flujo de trabajo del proyecto" width="600"/>
 
 
 ## Funcionalidades
