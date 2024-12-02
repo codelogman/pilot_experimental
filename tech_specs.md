@@ -122,7 +122,7 @@ Esta <span style="color:green;">API</span> es compatible con herramientas empres
 
 <h3 style="color:darkred;">Notas Finales</h3>
 <p>
-Este flujo de trabajo cumple con los requerimientos del documento <b>REF</b>. Se validó cada etapa para garantizar que la <span style="color:blue;">información geoespacial</span> 
+Este flujo de trabajo cumple con los requerimientos del documento <b>RFP/AFSC</b>. Se validó cada etapa para garantizar que la <span style="color:blue;">información geoespacial</span> 
 se preserve y que los resultados sean consistentes con las especificaciones. Además, dejamos componentes preparados para futuras iteraciones, 
 como el <span style="color:blue;">Fine-Tuning</span> del modelo y la integración completa con <b>GIS</b> y sistemas empresariales.
 </p>
