@@ -35,7 +35,7 @@ pilot_experimental/
 ├── test site.kml                  # Áreas de interés definidas en formato KML.
 ├── unet_model.h5                  # Modelo UNet para futuras integraciones.
 └── verificar_simetria.py          # Verificación de consistencia espacial.
-
+```
 
 
 🚀 Funcionalidades
