@@ -1,4 +1,4 @@
-# Pilot Experimental: Agricultural Edge Detection 🚜🌍
+# Pilot Experimental: Agricultural Edge Detection 🌍
 
 [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/your-repo)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
@@ -8,7 +8,7 @@
 
 Este repositorio contiene los scripts, análisis y configuraciones para desarrollar un flujo completo de **detección de bordes agrícolas** utilizando imágenes satelitales Sentinel-2, **modelos de segmentación automática (SAM)** y herramientas de análisis geoespacial avanzadas.
 
-## 🗂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```plaintext
 pilot_experimental/
@@ -38,8 +38,11 @@ pilot_experimental/
 ```
 
 
-🚀 Funcionalidades
-Preprocesamiento de Imágenes Satelitales:
+
+
+🚀 ## Funcionalidades
+
+**Preprocesamiento** de Imágenes **Satelitales**:
 
 Generación de mapas NDVI/EVI interactivos.
 Procesamiento Sobel para detección de bordes.
@@ -58,6 +61,7 @@ Configuración lista para Kubernetes y Puppet.
 
 Verificación de alineación espacial entre máscaras e imágenes originales.
 Estadísticas y métricas exportadas en formato HTML.
-Prototipo de API:
+
+**Prototipo de API**:
 
 Servicio RESTful para integrar detección de bordes agrícolas en aplicaciones externas.
