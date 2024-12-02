@@ -9,6 +9,7 @@
 
 Este repositorio contiene los scripts, análisis y configuraciones para desarrollar un flujo completo de **detección de bordes agrícolas** utilizando imágenes satelitales Sentinel-2, **modelos de segmentación automática (SAM)** y herramientas de análisis geoespacial avanzadas.
 
+
 ## Estructura del Proyecto
 
 ```plaintext
