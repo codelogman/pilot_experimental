@@ -35,3 +35,29 @@ pilot_experimental/
 ├── test site.kml                  # Áreas de interés definidas en formato KML.
 ├── unet_model.h5                  # Modelo UNet para futuras integraciones.
 └── verificar_simetria.py          # Verificación de consistencia espacial.
+
+
+
+🚀 Funcionalidades
+Preprocesamiento de Imágenes Satelitales:
+
+Generación de mapas NDVI/EVI interactivos.
+Procesamiento Sobel para detección de bordes.
+
+**Segmentación** y **Fine-Tuning**:
+
+Fine-tuning del modelo SAM con datasets personalizados.
+Generación de máscaras RGBA exportadas en formatos GeoJSON y GPKG.
+Automatización y Escalabilidad:
+
+Pipeline automatizado con Jenkins.
+Configuración lista para Kubernetes y Puppet.
+
+
+**Análisis Geoespacial**:
+
+Verificación de alineación espacial entre máscaras e imágenes originales.
+Estadísticas y métricas exportadas en formato HTML.
+Prototipo de API:
+
+Servicio RESTful para integrar detección de bordes agrícolas en aplicaciones externas.
