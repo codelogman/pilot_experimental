@@ -70,6 +70,8 @@ Servicio RESTful para integrar detección de bordes agrícolas en aplicaciones e
 
 Este proyecto está abierto a contribuciones. Para más detalles, revisa **tech_specs.txt**
 
+<img src="mascaras en google earth2.jpg" alt="mascaras geolocalizables" width="600"/>
+
 ``` bash
 *alex_strange
 ```
