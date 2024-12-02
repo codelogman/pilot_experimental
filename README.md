@@ -70,4 +70,6 @@ Servicio RESTful para integrar detección de bordes agrícolas en aplicaciones e
 
 Este proyecto está abierto a contribuciones. Para más detalles, revisa **tech_specs.txt**
 
-alex_strange
+``` bash
+*alex_strange
+```
