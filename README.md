@@ -12,7 +12,7 @@ Este repositorio contiene los scripts, análisis y configuraciones para desarrol
 
 ## Estructura del Proyecto
 
-```plaintext
+```python
 pilot_experimental/
 ├── dataset/                       # Datasets personalizados para el fine-tuning.
 │   ├── train_annotations.json     # Anotaciones de entrenamiento (COCO).
