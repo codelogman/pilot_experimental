@@ -38,7 +38,8 @@ pilot_experimental/
 ├── tech_specs.txt # Technical specifications of the project.
 ├── test site.kml # Areas of interest defined in KML format.
 ├── unet_model.h5 # UNet model for future integrations.
-└── check_symmetry.py # Spatial consistency check.```
+└── check_symmetry.py # Spatial consistency check.
+```
 
 <img src="diagrama.png" alt="Project Workflow" width="600"/>
 
