@@ -7,77 +7,71 @@
 [![Jenkins](https://img.shields.io/badge/jenkins-automated-orange)](https://www.jenkins.io/)
 [![Status](https://img.shields.io/badge/status-Stable-success)](#)
 
-Este repositorio contiene los scripts, análisis y configuraciones para desarrollar un flujo completo de **detección de bordes agrícolas** utilizando imágenes satelitales Sentinel-2, **modelos de segmentación automática (SAM)** y herramientas de análisis geoespacial avanzadas.
+This repository contains the scripts, analyses and configurations to develop a complete **agricultural edge detection** workflow using Sentinel-2 satellite imagery, **Automatic Segmentation Models (SAM)** and advanced geospatial analysis tools.
 
 
-## Estructura del Proyecto
+## Project Structure
 
 ```python
 pilot_experimental/
-├── dataset/                       # Datasets personalizados para el fine-tuning.
-│   ├── train_annotations.json     # Anotaciones de entrenamiento (COCO).
-│   ├── train_images/              # Imágenes de entrenamiento.
-│   ├── val_annotations.json       # Anotaciones de validación (COCO).
-│   └── val_images/                # Imágenes de validación.
-├── notebook/                      # Carpeta contenedora de los notebooks
-│   └── dataset_construction.ipynb # Flujo de construccion del dataset.
-├── analysis_statistics.html       # Análisis estadístico y métricas de los datos procesados.
-├── api_prototype.py               # Prototipo de API para detección de bordes agrícolas.
-├── diagrama.png                   # Diagrama del flujo de trabajo completo.
-├── Dockerfile                     # Dockerfile para contenerizar el flujo.
-├── final_check_integrity.py       # Verificación de integridad de archivos generados.
-├── fine_tuning_sam.py             # Fine-tuning del modelo SAM.
-├── generate_sobel_sentinel.py     # Procesamiento Sobel de imágenes Sentinel.
-├── Jenkinsfile                    # Pipeline automatizado con Jenkins.
-├── k8s-deployment.yaml            # Configuración de despliegue en Kubernetes.
-├── ndvi_evi_analysis.html         # Análisis NDVI/EVI.
-├── ndvi_evi_visualization_map.html # Mapa interactivo de NDVI/EVI.
-├── puppet-manifest.pp             # Gestión de infraestructura con Puppet.
-├── sam_2_apply_colored2.py        # Segmentación SAM con exportación a GeoJSON/GPKG.
-├── sentinnel_download_script.py   # Descarga de imágenes Sentinel-2.
-├── tech_specs.txt                 # Especificaciones técnicas del proyecto.
-├── test site.kml                  # Áreas de interés definidas en formato KML.
-├── unet_model.h5                  # Modelo UNet para futuras integraciones.
-└── verificar_simetria.py          # Verificación de consistencia espacial.
-```
+├── dataset/ # Custom datasets for fine-tuning.
+│   ├── train_annotations.json # Training annotations (COCO).
+│   ├── train_images/ # Training images.
+│   ├── val_annotations.json # Validation annotations (COCO).
+│   └── val_images/ # Validation images.
+├── notebook/ # Folder containing notebooks
+│   └── dataset_construction.ipynb # Dataset construction flow.
+├── analysis_statistics.html # Statistical analysis and metrics of the processed data.
+├── api_prototype.py # API prototype for agricultural edge detection.
+├── diagram.png # Diagram of the complete workflow.
+├── Dockerfile # Dockerfile to containerize the flow.
+├── final_check_integrity.py # Integrity check of generated files.
+├── fine_tuning_sam.py # Fine-tuning of the SAM model.
+├── generate_sobel_sentinel.py # Sobel processing of Sentinel images.
+├── Jenkinsfile # Automated pipeline with Jenkins.
+├── k8s-deployment.yaml # Deployment configuration on Kubernetes.
+├── ndvi_evi_analysis.html # NDVI/EVI analysis.
+├── ndvi_evi_visualization_map.html # Interactive NDVI/EVI map.
+├── puppet-manifest.pp # Infrastructure management with Puppet.
+├── sam_2_apply_colored2.py # SAM segmentation with GeoJSON/GPKG export.
+├── sentinnel_download_script.py # Sentinel-2 image download.
+├── tech_specs.txt # Technical specifications of the project.
+├── test site.kml # Areas of interest defined in KML format.
+├── unet_model.h5 # UNet model for future integrations.
+└── check_symmetry.py # Spatial consistency check.```
 
-<img src="diagrama.png" alt="Flujo de trabajo del proyecto" width="600"/>
+<img src="diagrama.png" alt="Project Workflow" width="600"/>
 
 
-## Funcionalidades
+## Features
 
-**Preprocesamiento** de Imágenes **Satelitales**:
+**Preprocessing** of **Satellite** Images:
 
 
 <img src="mascaras en google earth2.jpg" alt="mascaras geolocalizables" width="600"/>
 
-Generación de mapas NDVI/EVI interactivos.
-Procesamiento Sobel para detección de bordes.
+Interactive NDVI/EVI map generation.
+Sobel processing for edge detection.
 
-**Segmentación** y **Fine-Tuning**:
+**Segmentation** and **Fine-Tuning**:
 
-Fine-tuning del modelo SAM con datasets personalizados.
-Generación de máscaras RGBA exportadas en formatos GeoJSON y GPKG.
-Automatización y Escalabilidad:
+Fine-tuning of the SAM model with custom datasets.
+RGBA mask generation exported in GeoJSON and GPKG formats.
+Automation and Scalability:
 
-Pipeline automatizado con Jenkins.
-Configuración lista para Kubernetes y Puppet.
+Automated pipeline with Jenkins.
+Ready-to-use configuration for Kubernetes and Puppet.
 
+**Geospatial Analysis**:
 
-**Análisis Geoespacial**:
+Verification of spatial alignment between masks and original images.
+Statistics and metrics exported in HTML format.
 
-Verificación de alineación espacial entre máscaras e imágenes originales.
-Estadísticas y métricas exportadas en formato HTML.
+**API Prototype**:
 
-**Prototipo de API**:
+RESTful service to integrate agricultural edge detection into external applications.
 
-Servicio RESTful para integrar detección de bordes agrícolas en aplicaciones externas.
-
-
-
-Este proyecto está abierto a contribuciones. Para más detalles, revisa [**tech_specs.md**](tech_specs.md)
-
-
+This project is open for contributions. For more details, check out [**tech_specs.md**](tech_specs.md)
 ``` bash
 *alex_strange
 ```
