@@ -48,7 +48,7 @@ pilot_experimental/
 **Preprocessing** of **Satellite** Images:
 
 
-<img src="mascaras en google earth2.jpg" alt="mascaras geolocalizables" width="600"/>
+<img src="mascaras en google earth2.jpg" alt="geolocalizable masks" width="600"/>
 
 Interactive NDVI/EVI map generation.
 Sobel processing for edge detection.
